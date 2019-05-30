@@ -49,6 +49,18 @@ module.exports = {
       })
     }
     return res.status(401).send('Please log in')
+  },
+  getUser : (req,res) => {
+    const {session} = req
+    if(session.user){
+      return res.status(200).send(session.user)
+    } else {
+      return res.status(401).send('Please Log In')
+    }
+  },
+  logout: (req,res) => {
+    req.session.destroy()
+    res.sendStatus(200)
   }
 }
 
