@@ -32,6 +32,23 @@ module.exports = {
     } else {
       return res.status(401).send('Incorrect username or password')
     }
+  },
+  getDetails: async (req,res) => {
+    const db = req.app.get('db')
+    const {session} = req
+    if(session.user){
+      const details = await db.get_user_details({id: session.user.id})
+      const {firstname,email,balance,user_id} = details[0]
+      return res
+        .status(200)
+        .send({firstname,
+          email,
+          balance,
+          user_id,
+          username:session.user.username
+      })
+    }
+    return res.status(401).send('Please log in')
   }
 }
 
