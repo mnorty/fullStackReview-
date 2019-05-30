@@ -15,8 +15,10 @@ app.use(session({
   }
 }))
 
-massive(CONNECTION_STRING).then((database) => {
-  app.set('db',database) // the 'db' is us choosing the name, and the database is the information, which matches the response from .then above.
-  console.log('database set!')
+massive(CONNECTION_STRING).then((db) => {
+  app.set('db',db) // the 'db' is us choosing the name, and the database is the information, which matches the response from .then above.
+  console.log('connected to db')
   app.listen(SERVER_PORT, () => console.log(`listening on port:${SERVER_PORT}`))
 })
+
+app.post('/auth/register',auth_ctrl.register)
